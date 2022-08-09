@@ -1,0 +1,30 @@
+/* Navbar{
+    color: white !important;
+} */
+
+.navbar-brand{
+    color: white !important;
+}
+
+.navbar-toggler{
+    background-color: honeydew !important;
+}
+
+.nav-link{
+    color: white !important;
+}
+
+.form-check-label{
+    color: white !important;
+}
+
+Form{
+    display: flex;
+    align-items: center;
+    padding: 9px;
+    margin-left: auto;
+}
+
+.me-auto{
+    display: contents !important;
+}
