@@ -47,6 +47,7 @@ export default class App extends Component {
         <div className="App" style={this.state.mode}>
           <NavBar toggleMode={this.toggleMode} buttonText={this.state.buttonText}></NavBar>
           <Routes>
+            <Route exact path="/general" element={<News key="general" style={this.state.mode} category="general" />}/>
             <Route exact path="/" element={<News key="general" style={this.state.mode} category="general" />}/>
             <Route exact path="/science" element={<News key="science" style={this.state.mode} category="science" />} />
             <Route exact path="/business" element={<News key="business" style={this.state.mode} category="business" />} />
