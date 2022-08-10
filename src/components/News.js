@@ -318,7 +318,7 @@ export default class News extends Component {
 
     async componentDidMount() {
         console.log("Mount");
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27fca5e3b11d4b839b66f146bc4aecca&pageSize=6&${this.state.page}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=27fca5e3b11d4b839b66f146bc4aecca&pageSize=6&${this.state.page}`;
         this.setState({ loading: true })
         let data = await fetch(url);
         let parsedData = await data.json()
@@ -349,11 +349,14 @@ export default class News extends Component {
                             this.state.articles.map((article) => {
                                 return <Col lg={4} md={6} sm={12} key={article.url}>
                                     <NewsItem
+                                        source={article.source.name}
                                         style={this.props.style}
                                         title={article.title}
                                         description={article.description}
                                         urlToImage={article.urlToImage}
                                         url={article.url}
+                                        author={article.author}
+                                        date={article.publishedAt}
                                     ></NewsItem>
                                 </Col>
                             })
