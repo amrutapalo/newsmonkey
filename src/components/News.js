@@ -4,6 +4,8 @@ import NewsItem from './NewsItem';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import PrevNextBar from '../UI/PrevNextBar';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 export default class News extends Component {
@@ -269,26 +271,61 @@ export default class News extends Component {
             "content": "India's passenger vehicle sales this year are expected to be about a quarter of a million units more than the initial projections that were themselves for record high volumes, industry executives sai… [+3452 chars]"
         }
     ];
-
     articles = [];
 
     constructor() {
         super();
         this.state = {
             articles: this.articles,
-            loading: false
+            loading: false,
+            page : 1
         }
     }
 
-    async componentDidMount() {
-        let url = "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27fca5e3b11d4b839b66f146bc4aecca";
-        let data = await fetch(url);
-        // console.log(await data.json());
-        let parsedData = await data.json()
-        // let articles = parsedData.articles;
-        console.log(parsedData.articles);
+    onClickPrevious = async () => {
+        console.log("Previous Button Clicked");
+        this.setState({page : this.state.page - 1})
 
-        this.setState({ articles: parsedData.articles })
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27fca5e3b11d4b839b66f146bc4aecca&pageSize=6&page=${this.state.page - 1}`;
+        console.log(url);
+        this.setState({ loading: true })
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        console.log(parsedData.articles);
+        this.setState({ articles: parsedData.articles, loading: false })
+        console.log(this.state);
+        console.log(this.articles);
+        
+    }
+    
+    onClickNext = async () => {
+        console.log("Next Button Clicked");
+        this.setState({page : this.state.page + 1})
+
+
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27fca5e3b11d4b839b66f146bc4aecca&pageSize=6&page=${this.state.page + 1}`;
+        console.log(url);
+
+        this.setState({ loading: true })
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        console.log(parsedData.articles);
+        this.setState({ articles: parsedData.articles, loading: false })
+        console.log(this.state);
+        console.log(this.articles);
+    }
+
+
+    async componentDidMount() {
+        console.log("Mount");
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=27fca5e3b11d4b839b66f146bc4aecca&pageSize=6&${this.state.page}`;
+        this.setState({ loading: true })
+        let data = await fetch(url);
+        let parsedData = await data.json()
+        console.log(parsedData.articles);
+        this.setState({ articles: parsedData.articles, loading: false })
+        // let parsedData = this.article;
+        // this.setState({ articles: parsedData, loading: false })
         console.log(this.state);
         console.log(this.articles);
     }
@@ -297,7 +334,16 @@ export default class News extends Component {
         console.log("render")
         return (
             <>
-                <Container>
+                {this.state.loading &&
+                    <Container fluid>
+                        <Row className="justify-content-center">
+                            <Spinner animation="grow"
+                            // className="visually-hidden"
+                            />
+                        </Row>
+                    </Container>
+                }
+                {!this.state.loading && <Container>
                     <Row>
                         {
                             this.state.articles.map((article) => {
@@ -312,8 +358,12 @@ export default class News extends Component {
                                 </Col>
                             })
                         }
+                        </Row>
+                    <Row>
+                        <PrevNextBar onClickPrevious={this.onClickPrevious} onClickNext={this.onClickNext} page={this.state.page}>
+                        </PrevNextBar>
                     </Row>
-                </Container>
+                </Container>}
 
             </>
         )

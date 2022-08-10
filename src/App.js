@@ -2,6 +2,7 @@ import './App.css';
 import News from './components/News';
 import React, { Component } from 'react'
 import NavBar from './UI/NavBar';
+import PrevNextBar from './UI/PrevNextBar';
 
 export default class App extends Component {
 
