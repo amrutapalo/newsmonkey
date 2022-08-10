@@ -337,7 +337,7 @@ export default class News extends Component {
                 {this.state.loading &&
                     <Container fluid>
                         <Row className="justify-content-center">
-                            <Spinner animation="grow"
+                            <Spinner animation="border"
                             // className="visually-hidden"
                             />
                         </Row>

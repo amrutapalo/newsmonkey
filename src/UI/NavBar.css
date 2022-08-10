@@ -28,3 +28,8 @@ Form{
 .me-auto{
     display: contents !important;
 }
+
+a{
+    text-decoration: none !important;
+    color: white !important;
+}
